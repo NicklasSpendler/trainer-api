@@ -5,7 +5,7 @@ async function createSingleAsset(req, res, next) {
 	try {
 		let file = saveFile(req.files.file);
 		let asset = await Asset.create({
-			url: "http://localhost:4000/file-bucket/" + file
+			url: "https://nicklassvendeprve.netlify.com/file-bucket/" + file
 		});
 		res.json(asset);
 	} catch (error) {

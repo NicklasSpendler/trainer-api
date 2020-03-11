@@ -34,6 +34,7 @@ async function getSingleAsset(req, res, next) {
 	}
 }
 
+
 module.exports = {
 	createSingleAsset,
 	getAllAssets,

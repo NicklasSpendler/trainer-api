@@ -5,7 +5,7 @@ async function createSingleAsset(req, res, next) {
 	try {
 		let file = saveFile(req.files.file);
 		let asset = await Asset.create({
-			url: "https://nicklassvendeprve.netlify.com/file-bucket/" + file
+			url: `${process.env.host}/file-bucket/` + file
 		});
 		res.json(asset);
 	} catch (error) {
@@ -34,9 +34,33 @@ async function getSingleAsset(req, res, next) {
 	}
 }
 
+async function updateSingleAsset(req, res, next) {
+	console.log('req', req.params.id);
+	try {
+		let result = await Asset.update({ url: req.fields.url }, {
+			where: {
+				id: req.params.id
+			}
+		})
+		if (!result[0]) {
+			res.status(404).end();
+			return;
+		}
+		let asset = await Asset.findByPk(req.params.id);
+        res.json(asset);
+	} catch (error){
+		if(error.SequelizeValidationError){
+            res.status(400).end()
+            return
+        }
+        res.status(500).end();
+        console.error(error);
+	}
+}
 
 module.exports = {
 	createSingleAsset,
 	getAllAssets,
-	getSingleAsset
+	getSingleAsset,
+	updateSingleAsset
 };

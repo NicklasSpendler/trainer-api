@@ -35,7 +35,6 @@ async function getSingleAsset(req, res, next) {
 }
 
 async function updateSingleAsset(req, res, next) {
-	console.log('req', req.params.id);
 	try {
 		let result = await Asset.update({ url: req.fields.url }, {
 			where: {
